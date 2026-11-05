@@ -18,6 +18,7 @@ Live site: <https://dezdickey.github.io/success-stack/>
 | [`linkedin.html`](linkedin.html) | A LinkedIn profile in ten minutes |
 | [`card.html`](card.html) | One double-sided sheet to print: the Stack and the numbers on the front, a Stack Card to fill in on the back |
 | [`sources.html`](sources.html) | Every number, its source, the date it was checked, and its limits |
+| [`privacy.html`](privacy.html) | What "collects nothing" covers, and how to check it yourself |
 
 ## Privacy and security
 

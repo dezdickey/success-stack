@@ -6,7 +6,7 @@
  */
 
 :root {
-  --ink: #14161b;
+  --ink: #0e1014;
   --ink-2: #353a43;
   --muted: #565b65;
   --paper: #fbfaf6;
@@ -14,16 +14,16 @@
   --rule: #e2ddd2;
   --link: #0b6b5c;
   --focus: #6d4fd6;
-  --skills: #2bb39a;
+  --skills: #00c08b;
   --skills-t: #e1f4ee;
-  --projects: #f6b42c;
+  --projects: #ffb627;
   --projects-t: #fdefcf;
-  --certs: #9d7fea;
+  --certs: #9b6dff;
   --certs-t: #eee9fc;
-  --intern: #ff7b5c;
+  --intern: #ff5a3c;
   --intern-t: #ffe8e0;
   --intern-dark: #b43f22;
-  --degree: #d9d4ca;
+  --degree: #d8d2c4;
   --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Roboto, Arial, sans-serif;
   --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Roboto, Arial, sans-serif;
   --wrap: 70rem;
@@ -585,3 +585,112 @@ html.present .steps li { font-size: 1rem; }
 html.present .formula { font-size: 1rem; }
 html.present .author-connect { font-size: 0.85rem; }
 html.present .commit li { font-size: 1.05rem; }
+
+/* ==========================================================================
+   Wow pass, piece 1 (5 Nov): a bolder look.
+   Its own palette (never SC State's), heavier type, more colour in the blocks,
+   and a dark hero that fills the first screen.
+   ========================================================================== */
+
+:root {
+  --ink: #0e1014;
+  --ink-2: #2d323b;
+  --muted: #555b66;
+  --paper: #fbf8f2;
+  --rule: #e4ded2;
+  --night: #0e1014;
+  --skills: #00c08b;
+  --skills-t: #d9f6ec;
+  --projects: #ffb627;
+  --projects-t: #fff0cc;
+  --certs: #9b6dff;
+  --certs-t: #ece5ff;
+  --intern: #ff5a3c;
+  --intern-t: #ffe4dd;
+  --intern-dark: #c2361c;
+  --degree: #d8d2c4;
+}
+
+h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.04; }
+.question { font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.02; }
+.kicker { letter-spacing: 0.14em; }
+
+/* The hero: dark, full first screen, the stack on the right */
+.hero {
+  max-width: none; margin: 0; border-top: 0; position: relative; overflow: hidden;
+  min-height: calc(100vh - 3.4rem);
+  min-height: calc(100svh - 3.4rem);
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center; gap: clamp(1.5rem, 4vw, 4rem);
+  padding: clamp(2.5rem, 6vw, 5rem) max(var(--gutter), calc((100% - var(--wrap)) / 2));
+  background: var(--night); color: #fff;
+}
+.hero .kicker { color: var(--projects); }
+.hero .title {
+  font-size: clamp(3rem, 7.4vw, 6.6rem); font-weight: 900; letter-spacing: -0.045em;
+  line-height: 0.95; margin: 0 0 0.35em; color: #fff;
+}
+.hero .lead { color: #d6d9df; font-size: clamp(1.12rem, 1.8vw, 1.38rem); max-width: 32em; }
+.hero a:focus-visible { outline-color: var(--projects); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.8rem 0 0; }
+.cta {
+  display: inline-block; font-weight: 800; text-decoration: none; line-height: 1.2;
+  padding: 0.8rem 1.4rem; border-radius: 999px;
+  background: var(--projects); color: var(--ink); border: 2px solid var(--projects);
+}
+.cta:hover { background: #ffc95c; border-color: #ffc95c; }
+.cta-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.55); }
+.cta-ghost:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+
+/* The stack in the hero (sizes in em, so the whole drawing scales with font-size) */
+.hero-art { position: relative; width: 100%; max-width: 26em; height: 25em; justify-self: center; font-size: 1rem; }
+.ha-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 0.25em; border-radius: 0.2em; background: rgba(255, 255, 255, 0.8); }
+.ha-line { position: absolute; left: 0; right: 0; top: 11em; height: 0; border-top: 0.25em dashed rgba(255, 255, 255, 0.92); }
+.ha-label { position: absolute; left: 0; bottom: 0.55em; font-size: 0.78em; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; white-space: nowrap; }
+.ha-stack { position: absolute; right: 0.5em; bottom: 0.25em; width: 13em; display: flex; flex-direction: column; gap: 0.35em; }
+.ha-block {
+  display: flex; align-items: center; justify-content: center; height: 3.3em;
+  border-radius: 0.6em; font-weight: 800; font-size: 1em; color: var(--ink);
+}
+.ha-degree { height: 4em; background: var(--degree); }
+.ha-skills { background: var(--skills); }
+.ha-projects { background: var(--projects); }
+.ha-certs { background: var(--certs); }
+.ha-intern { background: var(--intern); }
+.ha-badge { align-self: center; font-weight: 800; font-size: 0.95em; color: #fff; height: 1.3em; margin-bottom: 0.3em; white-space: nowrap; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; min-height: 0; }
+  .hero-art { font-size: 0.82rem; max-width: 24em; justify-self: start; }
+}
+
+/* More colour in the blocks; bigger numbers */
+.blocks .tile { border: 0; color: var(--ink); }
+.blocks .b-skills { background: var(--skills); }
+.blocks .b-projects { background: var(--projects); }
+.blocks .b-certs { background: var(--certs); }
+.blocks .b-intern { background: var(--intern); }
+.blocks .tile h3 { font-size: 1.45rem; }
+.blocks .tile p { font-weight: 500; }
+.stat { border-top-width: 10px; }
+.stat-num { font-size: clamp(3rem, 6vw, 5rem); }
+.window { border: 2px solid var(--ink); }
+.window::before { border-bottom: 2px solid var(--ink); background: var(--projects-t); }
+.window::after { background: var(--ink); box-shadow: 0.7rem 0 0 var(--ink), 1.4rem 0 0 var(--ink); opacity: 0.55; }
+
+/* Presenting: the hero keeps its two columns and dark background */
+html.present main > .section.hero {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center; gap: 4vw;
+}
+html.present .hero .title { font-size: 4.7rem; }
+html.present .hero .lead { font-size: 1.1rem; max-width: 30em; }
+html.present .hero .kicker { font-size: 0.7rem; }
+html.present .hero-cta { display: none; }
+html.present .hero-art { font-size: 1.1rem; width: 26em; max-width: 100%; justify-self: end; }
+.hero .title { line-height: 1.04; }
+html.present main > .section.hero { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); }
+html.present .hero .title { font-size: 3.6rem; }
+html.present .hero-art { font-size: 0.8rem; }
+.ha-stack { width: min(13em, 52%); }
+.ha-label { max-width: 45%; white-space: normal; line-height: 1.3; }

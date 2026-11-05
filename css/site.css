@@ -856,3 +856,16 @@ html.present .crowd-line { top: calc(var(--cell) * 5 + 0.62rem); }
   .blocks .tile, .blocks .tile::after, .ha-block { transition: none; }
   .copy-btn.copied, .prompt.flash::after { animation: none; }
 }
+
+/* ==========================================================================
+   Wow pass, piece 5: presenting moves smoothly. Steps on one page glide
+   (in the script); between pages the old page fades out and the new one
+   fades in once it sits on the right section.
+   ========================================================================== */
+@keyframes ss-unhide { to { opacity: 1; } }
+html.present body { transition: opacity 0.28s ease; }
+html.present-loading body { opacity: 0; animation: ss-unhide 0s linear 1.5s forwards; }
+html.present-leaving body { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  html.present body { transition: none; }
+}

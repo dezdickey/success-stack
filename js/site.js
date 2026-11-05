@@ -148,7 +148,11 @@
     var el = document.getElementById(entry[1]);
     if (el) steps.push({ n: n, el: el });
   });
-  if (!steps.length) return;
+  if (!steps.length) {
+    // Not a page the talk visits: ignore ?present.
+    doc.classList.remove('present', 'present-loading');
+    return;
+  }
 
   var presentButton = document.getElementById('present-btn');
   var count = document.getElementById('deck-count');
@@ -158,10 +162,31 @@
   var head = document.querySelector('.site-head');
   var current = 0; // index into steps
   var settling = false;
-  var hintTimer = null, scrollTimer = null, resizeTimer = null;
+  var moving = false; // a smooth step is under way
+  var hintTimer = null, scrollTimer = null, resizeTimer = null, moveTimer = null;
+  var calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var afterMove = null;
 
   function presenting() { return doc.classList.contains('present'); }
   function topOf(el) { return el.getBoundingClientRect().top + window.pageYOffset; }
+
+  // A smooth step to the next or previous section. Key presses during the
+  // glide count from where it is heading, not from where it has got to.
+  function endMove() {
+    if (!moving) return;
+    moving = false;
+    clearTimeout(moveTimer);
+    if (afterMove) { var run = afterMove; afterMove = null; run(); }
+  }
+  function glideTo(y, then) {
+    if (calm) { jumpTo(y); if (then) then(); return; }
+    moving = true;
+    afterMove = then || null;
+    window.scrollTo({ top: Math.max(0, Math.round(y)), behavior: 'smooth' });
+    clearTimeout(moveTimer);
+    moveTimer = setTimeout(endMove, 900);
+  }
+  window.addEventListener('scrollend', endMove);
 
   function jumpTo(y) {
     var before = doc.style.scrollBehavior;
@@ -192,12 +217,18 @@
     if (count) count.textContent = (steps[current].n + 1) + ' / ' + TALK.length;
   }
 
-  function show(i) {
+  function show(i, smooth) {
     var before = current;
     current = Math.max(0, Math.min(steps.length - 1, i));
-    jumpTo(topOf(steps[current].el));
+    var el = steps[current].el;
     showCount();
-    if (before !== current) replayIn(steps[current].el);
+    var replay = before !== current ? function () { replayIn(el); } : null;
+    if (smooth) {
+      glideTo(topOf(el), replay);
+    } else {
+      jumpTo(topOf(el));
+      if (replay) replay();
+    }
   }
 
   // Coming back to a section with an animation (like the hero) plays it again.
@@ -210,22 +241,32 @@
   }
 
   // Go to a step anywhere on the path, opening its page if it's elsewhere.
-  function goTo(n) {
+  function goTo(n, smooth) {
     if (n < 0 || n >= TALK.length) return;
     var entry = TALK[n];
     if (entry[0] === page) {
-      for (var i = 0; i < steps.length; i++) if (steps[i].n === n) { show(i); return; }
+      for (var i = 0; i < steps.length; i++) if (steps[i].n === n) { show(i, smooth); return; }
       return;
     }
-    window.location.href = entry[0] + '.html?present#' + entry[1];
+    // Another page: fade out, then open it (it fades back in).
+    var url = entry[0] + '.html?present#' + entry[1];
+    if (calm) { window.location.href = url; return; }
+    doc.classList.add('present-leaving');
+    setTimeout(function () { window.location.href = url; }, 220);
   }
+
+  // Coming back with the browser's Back button must not leave the page faded out.
+  window.addEventListener('pageshow', function () {
+    doc.classList.remove('present-leaving', 'present-loading');
+  });
 
   function setBlack(on) { if (black) black.hidden = !on; }
 
   function next() {
     setBlack(false);
+    if (moving) { goTo(steps[current].n + 1, true); return; }
     var i = stepAbove(window.pageYOffset + 4);
-    if (i < 0) { show(0); return; }
+    if (i < 0) { show(0, true); return; }
     var el = steps[i].el;
     var bottom = topOf(el) + el.offsetHeight;
     var viewBottom = window.pageYOffset + window.innerHeight;
@@ -235,12 +276,13 @@
       current = i;
       showCount();
     } else {
-      goTo(steps[i].n + 1);
+      goTo(steps[i].n + 1, true);
     }
   }
 
   function prev() {
     setBlack(false);
+    if (moving) { goTo(steps[current].n - 1, true); return; }
     var i = stepAbove(window.pageYOffset + 4);
     if (i < 0) { goTo(steps[0].n - 1); return; }
     var top = topOf(steps[i].el);
@@ -249,7 +291,7 @@
       current = i;
       showCount();
     } else {
-      goTo(steps[i].n - 1);
+      goTo(steps[i].n - 1, true);
     }
   }
 
@@ -277,7 +319,7 @@
   function stop() {
     if (!presenting()) return;
     var i = stepAbove(window.pageYOffset + 4);
-    doc.classList.remove('present');
+    doc.classList.remove('present', 'present-loading', 'present-leaving');
     if (presentButton) presentButton.setAttribute('aria-pressed', 'false');
     setBlack(false);
     if (hint) hint.hidden = true;
@@ -307,7 +349,7 @@
   });
 
   window.addEventListener('scroll', function () {
-    if (!presenting() || settling) return;
+    if (!presenting() || settling || moving) return;
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(function () {
       var i = stepAbove(window.pageYOffset + 4);
@@ -370,7 +412,10 @@
     var wanted = window.location.hash.slice(1), first = 0;
     for (var s = 0; s < steps.length; s++) if (steps[s].el.id === wanted) first = s;
     enter(first);
-    setTimeout(function () { show(first); }, 0);
+    setTimeout(function () {
+      show(first);
+      doc.classList.remove('present-loading'); // fades the page in
+    }, 0);
   }
 })();
 

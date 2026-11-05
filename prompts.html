@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light">
+<title>AI prompts for your major | Success Stack</title>
+<meta name="description" content="Four prompts that turn AI into a planner for your major: a skill for this semester, a first certification, a first project, and ten programs to apply to.">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/site.css" media="screen">
+<link rel="stylesheet" href="css/print.css" media="print">
+<script src="js/site.js" defer></script>
+</head>
+<body data-page="prompts">
+<a class="skip" href="#main">Skip to the content</a>
+
+<header class="site-head">
+  <a class="wordmark" href="index.html" aria-label="Success Stack home">
+    <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="2" y="24.5" width="60" height="4" fill="#14161b"/><rect x="12" y="50" width="40" height="11" rx="2" fill="#2bb39a"/><rect x="12" y="37" width="40" height="11" rx="2" fill="#f6b42c"/><rect x="12" y="24" width="40" height="11" rx="2" fill="#9d7fea"/><rect x="12" y="11" width="40" height="11" rx="2" fill="#ff7b5c"/></svg>
+    <span>Success Stack</span>
+  </a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="index.html#stack">The Stack</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="prompts.html" aria-current="page">AI prompts</a>
+    <a href="resume.html">Resume</a>
+    <a href="linkedin.html">LinkedIn</a>
+    <a href="card.html">Stack Card</a>
+    <a href="sources.html">Sources</a>
+  </nav>
+  <button type="button" class="present-btn" id="present-btn" aria-pressed="false" title="Show this guide on a projector, one section at a time">Present</button>
+</header>
+
+<main id="main">
+
+<section class="section present-only qr-screen" id="phone" aria-label="Open the prompts on your phone">
+  <p class="kicker">AI prompts</p>
+  <h2>Open the prompts on your phone</h2>
+  <div class="qr-pair">
+    <figure class="qr-card">
+      <img src="img/qr-prompts.svg" width="300" height="300" alt="QR code that opens the AI prompts page, dezdickey.github.io/success-stack/prompts.html">
+      <figcaption><b>AI prompts</b>dezdickey.github.io/success-stack/prompts.html</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section" id="rules" aria-labelledby="prompts-h">
+  <p class="kicker">AI prompts</p>
+  <h1 id="prompts-h">Make AI your research assistant</h1>
+  <p class="lead">Four prompts that plan your stack for <em>your</em> major. Copy one, paste it into the AI you use, and check what comes back. First, three rules:</p>
+  <ol class="rules">
+    <li><strong>Never paste</strong> your SSN, student ID, address or a password into an AI.</li>
+    <li><strong>Get official links</strong>, and check every deadline on the official site. AI can be out of date.</li>
+    <li><strong>Your resume is yours.</strong> Everything on it must be your own work, and true.</li>
+  </ol>
+</section>
+
+<section class="section" id="make-yours" aria-labelledby="fill-h">
+  <h2 id="fill-h">Make the prompts yours</h2>
+  <form class="fill" id="fill" autocomplete="off">
+    <label class="field">Your major
+      <input name="major" type="text" maxlength="60" placeholder="e.g. Nursing" spellcheck="false">
+    </label>
+    <label class="field">Your year
+      <select name="year">
+        <option value="freshman" selected>Freshman</option>
+        <option value="sophomore">Sophomore</option>
+        <option value="junior">Junior</option>
+        <option value="senior">Senior</option>
+      </select>
+    </label>
+    <label class="field">Hours a week
+      <input name="hours" type="number" min="1" max="40" step="1" value="5" inputmode="numeric">
+    </label>
+    <label class="field"><span>Your school <span class="optional">(optional)</span></span>
+      <input name="school" type="text" maxlength="80" placeholder="Your college" spellcheck="false">
+    </label>
+  </form>
+  <p class="note">The prompts below fill in as you type. Nothing you type is saved or sent anywhere: it stays on this page. Without JavaScript, copy a prompt by hand and replace the words in brackets.</p>
+</section>
+
+<section class="section prompt-section" id="prompt-1" aria-labelledby="p1-h">
+  <div class="prompt-head">
+    <h2 id="p1-h"><span class="pn">1</span> A skill for this semester</h2>
+    <button type="button" class="copy-btn" data-copy="p1">Copy prompt 1</button>
+  </div>
+<pre class="prompt" id="p1">I&rsquo;m a <span class="ph" data-field="year">freshman</span> <span class="ph" data-field="major">[your major]</span> student<span class="opt" data-field="school" hidden> at <span class="ph" data-field="school"></span></span> in the U.S., with about <span class="ph" data-field="hours">5</span> hours a week outside class.
+
+Which skill should I build this semester that employers in my field look for in interns and new hires?
+
+1. Give me 3&ndash;5 options, ranked. For each: why it matters in my field, how long it takes to get useful, and an official or well-known source I can check, with a link.
+2. Then take the #1 option (or the one I pick) and give me a week-by-week plan for this semester that fits my hours, with free places to learn and practice.
+
+Never make up deadlines, prices or links. If you aren&rsquo;t sure, say so and tell me where to check.</pre>
+  <p class="note">You get: a ranked list of skills with sources, then a weekly plan for one of them.</p>
+</section>
+
+<section class="section prompt-section" id="prompt-2" aria-labelledby="p2-h">
+  <div class="prompt-head">
+    <h2 id="p2-h"><span class="pn">2</span> Your first certification</h2>
+    <button type="button" class="copy-btn" data-copy="p2">Copy prompt 2</button>
+  </div>
+<pre class="prompt" id="p2">I&rsquo;m a <span class="ph" data-field="year">freshman</span> <span class="ph" data-field="major">[your major]</span> student<span class="opt" data-field="school" hidden> at <span class="ph" data-field="school"></span></span> in the U.S., with about <span class="ph" data-field="hours">5</span> hours a week outside class.
+
+Which certification should I earn first that employers in my field actually ask for?
+
+1. Give me 3&ndash;5 options, ranked. For each: who offers it (official link), what it proves to employers, the usual study time, and whether students get a discount. If my field uses licenses or other credentials instead, say so and suggest the best first step.
+2. Then take the #1 option (or the one I pick) and give me a week-by-week study plan that fits my hours, with free study videos, practice questions and practice labs.
+
+Never make up deadlines, prices or links. Tell me to check the current price and exam details on the official site.</pre>
+  <p class="note">You get: credentials your field asks for, then a study plan with free resources.</p>
+</section>
+
+<section class="section prompt-section" id="prompt-3" aria-labelledby="p3-h">
+  <div class="prompt-head">
+    <h2 id="p3-h"><span class="pn">3</span> Your first project</h2>
+    <button type="button" class="copy-btn" data-copy="p3">Copy prompt 3</button>
+  </div>
+<pre class="prompt" id="p3">I&rsquo;m a <span class="ph" data-field="year">freshman</span> <span class="ph" data-field="major">[your major]</span> student<span class="opt" data-field="school" hidden> at <span class="ph" data-field="school"></span></span> in the U.S., with about <span class="ph" data-field="hours">5</span> hours a week outside class.
+
+What first project could I finish this semester that would impress people who work in my field?
+
+1. Give me 3&ndash;5 ideas, ranked by how much they would impress a hiring manager and how doable they are for me. For each: what I would make, which skills it proves, and where I would show it (GitHub, a portfolio, a write-up or a poster).
+2. Then take the #1 idea (or the one I pick) and give me a week-by-week plan that fits my hours, with free tools, and show me how to describe it in one resume line when it&rsquo;s done.
+
+Never make up facts or links. If you aren&rsquo;t sure, say so.</pre>
+  <p class="note">You get: project ideas ranked for your field, then a plan and your future resume line.</p>
+</section>
+
+<section class="section prompt-section" id="prompt-4" aria-labelledby="p4-h">
+  <div class="prompt-head">
+    <h2 id="p4-h"><span class="pn">4</span> Ten programs and internships</h2>
+    <button type="button" class="copy-btn" data-copy="p4">Copy prompt 4</button>
+  </div>
+<pre class="prompt" id="p4">I&rsquo;m a <span class="ph" data-field="year">freshman</span> <span class="ph" data-field="major">[your major]</span> student<span class="opt" data-field="school" hidden> at <span class="ph" data-field="school"></span></span> in the U.S.
+
+Find 10 internships, research programs or early-career programs I could apply to for next summer. Include programs open to first- and second-year students.
+
+1. Put them in a table I can paste into a spreadsheet, with these columns: Program | Organization | Who can apply (year, major, citizenship, GPA) | Deadline or usual window | Paid? | Official link
+2. Rank them by how well they fit me, with one line on why.
+3. Then take the best fit and give me a week-by-week plan to get the application in before its deadline: resume, essays and recommendation letters.
+
+Only list programs you are confident exist, and link only to official sites. Never guess a deadline: if you aren&rsquo;t sure, write &ldquo;check site&rdquo;.</pre>
+  <p class="note">You get: a table to paste into a spreadsheet. That&rsquo;s the start of your tracker. Then check every deadline on the program&rsquo;s own site.</p>
+</section>
+
+<section class="section" id="after" aria-labelledby="after-h">
+  <h2 id="after-h">What to do with the answers</h2>
+  <ul class="where">
+    <li><strong>Check before you trust.</strong> Open every link. If a program or deadline isn&rsquo;t on the official site, cross it out.</li>
+    <li><strong>Keep a tracker.</strong> Paste prompt 4&rsquo;s table into a spreadsheet and add a column for &ldquo;applied&rdquo;.</li>
+    <li><strong>Pick one of each.</strong> One skill, one certification, one project. Write them on your <a href="card.html">Stack Card</a>.</li>
+    <li><strong>Come back weekly.</strong> Tell the AI how the week went and ask it to adjust the plan.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <p>Made by <a href="https://www.linkedin.com/in/desmond-dickey">Desmond Dickey</a>, a college student, for college students. <a href="sources.html">Sources</a> &middot; <a href="https://github.com/dezdickey">GitHub</a></p>
+  <p>This site collects nothing: no cookies, no tracking, no analytics, and nothing loads from other sites. It is an independent project, not affiliated with any college or employer.</p>
+</footer>
+
+<div class="deck-ui" id="deck-ui">
+  <span class="deck-count" id="deck-count"></span>
+  <button type="button" class="deck-exit" id="deck-exit">Exit</button>
+</div>
+<div class="deck-hint" id="deck-hint" hidden>&rarr; or PageDown: next &middot; &larr;: back &middot; B: blank &middot; F11: full screen &middot; Esc: exit</div>
+<div class="blackout" id="blackout" hidden></div>
+<p class="visually-hidden" id="live" aria-live="polite"></p>
+</body>
+</html>

@@ -1,0 +1,125 @@
+/*
+ * Success Stack: print styles. site.css is for screens only, so everything
+ * on paper is styled here.
+ *
+ * card.html prints one double-sided sheet: the front has the Stack and the
+ * numbers, the back is the Stack Card. Print on both sides, flipping on the
+ * long edge. Every other page prints as a plain document.
+ */
+
+@page { size: letter; margin: 0.6in 0.65in; }
+@page sheet { size: letter; margin: 0; }
+
+html, body { margin: 0; padding: 0; background: #fff; }
+body {
+  color: #14161b;
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Roboto, Arial, sans-serif;
+  font-size: 10.5pt; line-height: 1.4;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+a { color: inherit; }
+img { max-width: 100%; }
+
+/* Never on paper */
+.skip, .site-head, .site-foot, .deck-ui, .deck-hint, .blackout, .visually-hidden,
+.present-only, .copy-btn, .present-btn, #print-btn, .card-actions { display: none !important; }
+
+/* ---------- Plain documents (every page but the card) ---------- */
+
+h1 { font-size: 20pt; margin: 0 0 0.08in; line-height: 1.15; }
+h2 { font-size: 13.5pt; margin: 0.16in 0 0.05in; line-height: 1.2; break-after: avoid; page-break-after: avoid; }
+h3 { font-size: 11.5pt; margin: 0.1in 0 0.03in; break-after: avoid; page-break-after: avoid; }
+p, ul, ol { margin: 0 0 0.08in; }
+.kicker { font-size: 8.5pt; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 0.04in; }
+.lead { font-size: 11.5pt; }
+.note, .stat-src { font-size: 8.5pt; color: #4a4f58; }
+.section { break-inside: auto; margin: 0 0 0.1in; }
+.title { font-size: 28pt; }
+.stat, .tile, .year, .calendar li, .rules li, .commit li, .guide > li, .sources > li { break-inside: avoid; page-break-inside: avoid; }
+.stats, .tiles, .years { padding-left: 0.2in; }
+.stat-num { font-size: 16pt; font-weight: 900; margin: 0.06in 0 0; }
+.stat-text { margin: 0; }
+.stack-figure img { width: 5in; }
+.get, .tiles, .years, .calendar { list-style: none; padding-left: 0; }
+.get li, .tile, .year, .calendar li { margin: 0 0 0.06in; }
+.prompt {
+  white-space: pre-wrap; font-family: inherit; font-size: 9.5pt;
+  border: 0.8pt solid #b9b3a7; padding: 0.08in 0.1in; margin: 0.04in 0 0;
+  break-inside: avoid; page-break-inside: avoid;
+}
+.formula { font-weight: 700; border: 0.8pt dashed #14161b; padding: 0.01in 0.06in; }
+.recruiter { border-left: 3pt solid #14161b; padding-left: 0.1in; margin: 0.1in 0; }
+.mini-stack { display: none; }
+
+/* ---------- The Stack Card page: exactly two sides ---------- */
+
+.page-card .page-intro { display: none !important; }
+.page-card main, .page-card .sheets { display: block; margin: 0; padding: 0; }
+.page-card .sheet {
+  page: sheet;
+  box-sizing: border-box;
+  width: 8.5in; height: 10.94in;
+  padding: 0.5in 0.55in 0.45in;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.page-card .print-front { break-after: page; page-break-after: always; }
+.page-card h2, .page-card h3 { margin: 0; break-after: auto; }
+.page-card p, .page-card ul { margin: 0; }
+
+/* Front */
+.pf-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 0.3in; border-bottom: 2.5pt solid #14161b; padding-bottom: 0.08in; }
+.pf-mark { display: flex; align-items: center; gap: 0.08in; font-size: 25pt; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+.pf-mark .glyph { width: 0.42in; height: 0.42in; }
+.pf-tag { font-size: 11pt; font-weight: 700; text-align: right; max-width: 3.7in; line-height: 1.25; }
+.pf-stack { display: block; width: 5.4in; height: auto; margin: 0.14in auto 0.04in; }
+.pf-two { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3in; margin: 0.06in 0 0.14in; }
+.pf-h { font-size: 9pt !important; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 0.05in !important; }
+.pf-list { list-style: none; padding: 0; font-size: 9.5pt; }
+.pf-list li { padding: 0.025in 0; border-bottom: 0.5pt solid #d8d2c6; }
+.pf-stats { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.1in 0.16in; margin: 0 0 0.12in !important; }
+.pf-stats li { border-top: 3pt solid #14161b; padding-top: 0.05in; font-size: 8.6pt; line-height: 1.3; }
+.pf-stats li:nth-child(1) { border-top-color: #ff7b5c; }
+.pf-stats li:nth-child(2) { border-top-color: #9d7fea; }
+.pf-stats li:nth-child(3) { border-top-color: #ff7b5c; }
+.pf-stats li:nth-child(4) { border-top-color: #f6b42c; }
+.pf-stats li:nth-child(5) { border-top-color: #2bb39a; }
+.pf-stats li:nth-child(6) { border-top-color: #9d7fea; }
+.pf-stats b { display: block; font-size: 19pt; font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 0.02in; }
+.pf-stats small { display: block; font-size: 7pt; color: #4a4f58; margin-top: 0.03in; }
+.pf-rules { font-size: 8.5pt; padding: 0.07in 0 0; border-top: 1pt solid #d8d2c6; }
+.pf-qr { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3in; margin-top: auto; padding-top: 0.12in; border-top: 1pt solid #d8d2c6; }
+.pf-qr figure { display: flex; align-items: center; gap: 0.15in; margin: 0; }
+.pf-qr img { width: 1.3in; height: 1.3in; flex: none; }
+.pf-qr figcaption { font-size: 9pt; line-height: 1.3; }
+.pf-qr figcaption b { display: block; font-size: 13pt; font-weight: 800; margin-bottom: 0.03in; }
+.pf-qr figcaption span { display: block; font-weight: 700; margin-top: 0.05in; font-size: 8.5pt; }
+
+/* Back: the Stack Card */
+.card-sheet { font-size: 10pt; }
+.card-top { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2.5pt solid #14161b; padding-bottom: 0.06in; margin-bottom: 0.16in; }
+.card-title { font-size: 24pt; font-weight: 900; letter-spacing: -0.02em; line-height: 1.1; }
+.card-mark { font-size: 10pt; font-weight: 800; color: #4a4f58; }
+.card-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.02in 0.35in; margin-bottom: 0.1in; }
+.card-fields p, .card-cols p, .card-week p { display: flex; align-items: flex-end; gap: 0.08in; margin: 0 0 0.13in !important; font-weight: 700; }
+.wline { flex: 1; min-width: 0.5in; height: 0.22in; border-bottom: 0.9pt solid #14161b; }
+.wline-short { flex: 0 0 1.4in; display: inline-block; }
+.card-table { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0 0 0.2in; }
+.card-table caption { text-align: left; font-size: 11pt; font-weight: 800; margin-bottom: 0.06in; }
+.card-table th, .card-table td { border: 0.9pt solid #14161b; padding: 0.05in 0.08in; text-align: left; vertical-align: top; }
+.card-table thead th { font-size: 8.5pt; background: #f1eee7; }
+.card-table thead th:first-child { width: 1.45in; }
+.card-table thead th:last-child { width: 1.05in; }
+.card-table tbody tr { height: 0.92in; }
+.card-table tbody th { font-size: 10.5pt; border-left-width: 7pt; }
+.card-table .b-skills th { border-left-color: #2bb39a; }
+.card-table .b-projects th { border-left-color: #f6b42c; }
+.card-table .b-certs th { border-left-color: #9d7fea; }
+.card-table .b-intern th { border-left-color: #ff7b5c; }
+.card-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35in; }
+.card-h { font-size: 11pt !important; font-weight: 800; margin: 0 0 0.1in !important; }
+.checks { list-style: none; padding: 0; }
+.checks li { position: relative; padding-left: 0.28in; margin: 0 0 0.11in; line-height: 1.3; }
+.checks li::before { content: ""; position: absolute; left: 0; top: 0.01in; width: 0.15in; height: 0.15in; border: 1.1pt solid #14161b; border-radius: 2pt; }
+.card-week { margin-top: 0.12in; }
+.card-foot { display: flex; align-items: flex-end; gap: 0.06in; margin-top: auto !important; font-weight: 600; font-size: 9.5pt; }

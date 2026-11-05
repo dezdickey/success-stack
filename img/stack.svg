@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Roboto, Arial, sans-serif">
+  <title>The Success Stack</title>
+  <desc>On the left, a degree alone sits below a dashed hiring line, leaving a gap. On the right, the same degree with four blocks stacked on top of it (skills, projects, certifications and internships) rises past the line.</desc>
+
+  <!-- The hiring line, drawn first so the stack passes in front of it -->
+  <line x1="30" y1="210" x2="970" y2="210" stroke="#14161b" stroke-width="5" stroke-dasharray="22 12"/>
+  <text x="30" y="194" font-size="22" font-weight="800" letter-spacing="3" fill="#14161b">THE HIRING LINE</text>
+
+  <!-- Ground -->
+  <rect x="30" y="500" width="940" height="4" fill="#14161b"/>
+
+  <!-- Left: a degree alone -->
+  <rect x="130" y="394" width="240" height="102" rx="8" fill="#d9d4ca"/>
+  <text x="250" y="456" text-anchor="middle" font-size="32" font-weight="700" fill="#14161b">Degree</text>
+  <line x1="250" y1="236" x2="250" y2="368" stroke="#5d626c" stroke-width="3"/>
+  <polygon points="250,222 241,238 259,238" fill="#5d626c"/>
+  <polygon points="250,382 241,366 259,366" fill="#5d626c"/>
+  <text x="268" y="311" font-size="25" font-style="italic" fill="#4a4f58">the gap</text>
+  <text x="250" y="548" text-anchor="middle" font-size="28" font-weight="700" fill="#353a43">Degree alone</text>
+
+  <!-- Right: degree plus the four blocks -->
+  <rect x="610" y="394" width="260" height="102" rx="8" fill="#d9d4ca"/>
+  <text x="740" y="456" text-anchor="middle" font-size="32" font-weight="700" fill="#14161b">Degree</text>
+  <rect x="610" y="318" width="260" height="70" rx="8" fill="#2bb39a"/>
+  <text x="740" y="364" text-anchor="middle" font-size="29" font-weight="700" fill="#14161b">Skills</text>
+  <rect x="610" y="242" width="260" height="70" rx="8" fill="#f6b42c"/>
+  <text x="740" y="288" text-anchor="middle" font-size="29" font-weight="700" fill="#14161b">Projects</text>
+  <rect x="610" y="166" width="260" height="70" rx="8" fill="#9d7fea"/>
+  <text x="740" y="212" text-anchor="middle" font-size="29" font-weight="700" fill="#14161b">Certifications</text>
+  <rect x="610" y="90" width="260" height="70" rx="8" fill="#ff7b5c"/>
+  <text x="740" y="136" text-anchor="middle" font-size="29" font-weight="700" fill="#14161b">Internships</text>
+  <text x="740" y="66" text-anchor="middle" font-size="25" font-weight="700" fill="#14161b">Clears the line &#10003;</text>
+  <text x="740" y="548" text-anchor="middle" font-size="28" font-weight="700" fill="#353a43">Degree + your stack</text>
+</svg>

@@ -52,3 +52,9 @@ Built with AI coding assistance. I designed it and directed the decisions.
 
 Made by [Desmond Dickey](https://www.linkedin.com/in/desmond-dickey). An independent project,
 not affiliated with any college or employer.
+
+## Licence
+
+The code (HTML structure, CSS, JavaScript and `tools/`) is under the [MIT licence](LICENSE).
+The guide's written content and illustrations are under
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).

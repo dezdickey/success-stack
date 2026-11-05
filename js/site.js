@@ -104,6 +104,9 @@
     copyText(promptText(target)).then(function () {
       button.textContent = 'Copied ✓';
       button.classList.add('copied');
+      target.classList.remove('flash');
+      void target.offsetWidth;
+      target.classList.add('flash');
       announce('Copied. Paste it into your AI.');
     }, function () {
       selectContents(target);
@@ -455,4 +458,62 @@
       Array.prototype.forEach.call(section.querySelectorAll('.count'), countUp);
     }
   };
+})();
+
+/*
+ * Reveals: as you reach a section, its parts fade in and rise a little.
+ * Only parts below the first screen start hidden, only once this script has
+ * run, and never with reduced motion, so nothing can be left hidden.
+ * Also: tapping one of the Stack's blocks lifts it, like hovering does.
+ */
+(function () {
+  'use strict';
+
+  document.addEventListener('click', function (e) {
+    var tile = e.target && e.target.closest ? e.target.closest('.blocks .tile') : null;
+    if (!tile) return;
+    var lift = !tile.classList.contains('is-up');
+    Array.prototype.forEach.call(document.querySelectorAll('.blocks .tile.is-up'), function (t) { t.classList.remove('is-up'); });
+    if (lift) tile.classList.add('is-up');
+  });
+
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var GRIDS = ['tiles', 'stats', 'years', 'calendar', 'commit', 'rules', 'guide', 'steps', 'qr-pair', 'where'];
+  function isGrid(el) {
+    for (var g = 0; g < GRIDS.length; g++) if (el.classList.contains(GRIDS[g])) return true;
+    return false;
+  }
+
+  var fold = window.innerHeight;
+  var targets = [];
+  Array.prototype.forEach.call(document.querySelectorAll('main > .section:not(.hero)'), function (section) {
+    var k = 0;
+    Array.prototype.forEach.call(section.children, function (child) {
+      var parts = isGrid(child) ? Array.prototype.slice.call(child.children) : [child];
+      parts.forEach(function (part) {
+        if (part.getBoundingClientRect().top < fold) return; // already on screen: leave it be
+        part.style.setProperty('--rv-d', (Math.min(k, 5) * 70) + 'ms');
+        part.classList.add('rv');
+        targets.push(part);
+        k++;
+      });
+    });
+  });
+  if (!targets.length) return;
+
+  var reveal = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      reveal.unobserve(entry.target);
+      var el = entry.target;
+      el.classList.add('rv-in');
+      setTimeout(function () {
+        el.classList.remove('rv', 'rv-in');
+        el.style.removeProperty('--rv-d');
+      }, 1100);
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
+  targets.forEach(function (t) { reveal.observe(t); });
 })();

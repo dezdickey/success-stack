@@ -810,3 +810,49 @@ html.present .crowd { --cell: 0.9rem; }
 html.present .crowd-line { top: calc(var(--cell) * 5 + 0.62rem); }
 .why-stats .stat:nth-child(1) { border-top-color: var(--intern); }
 .why-stats .stat:nth-child(2) { border-top-color: var(--certs); }
+
+/* ==========================================================================
+   Wow pass, piece 4: sections reveal as you reach them, the Stack's blocks
+   respond to hover and tap, and copying confirms with a small pop.
+   Hover lifts use the separate `translate` property, so they never fight
+   the transforms that reveals and entrance animations use.
+   ========================================================================== */
+
+.rv { opacity: 0; transform: translateY(18px); }
+.rv.rv-in {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 0.6s ease var(--rv-d, 0s), transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--rv-d, 0s);
+}
+
+.blocks .tile { position: relative; isolation: isolate; transition: translate 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.blocks .tile::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  box-shadow: 0 16px 32px rgba(14, 16, 20, 0.28); opacity: 0; transition: opacity 0.28s ease;
+}
+.blocks .tile:hover, .blocks .tile.is-up { translate: 0 -8px; }
+.blocks .tile:hover::after, .blocks .tile.is-up::after { opacity: 1; }
+.ha-block { transition: translate 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.ha-block:hover { translate: 0 -0.3em; }
+
+@keyframes ss-copied {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+@keyframes ss-flash {
+  from { opacity: 0.95; }
+  to { opacity: 0; }
+}
+.copy-btn.copied { animation: ss-copied 0.38s cubic-bezier(0.2, 0.8, 0.3, 1.2); }
+.prompt { position: relative; isolation: isolate; }
+.prompt::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: var(--skills-t); opacity: 0;
+}
+.prompt.flash::after { animation: ss-flash 0.8s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rv { opacity: 1; transform: none; }
+  .blocks .tile, .blocks .tile::after, .ha-block { transition: none; }
+  .copy-btn.copied, .prompt.flash::after { animation: none; }
+}

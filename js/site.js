@@ -190,9 +190,18 @@
   }
 
   function show(i) {
+    var before = current;
     current = Math.max(0, Math.min(steps.length - 1, i));
     jumpTo(topOf(steps[current].el));
     showCount();
+    if (before !== current) replayIn(steps[current].el);
+  }
+
+  // Coming back to a section with an animation (like the hero) plays it again.
+  function replayIn(el) {
+    var art = el.querySelector('.hero-art');
+    if (!art || !art.getAnimations) return;
+    art.getAnimations({ subtree: true }).forEach(function (a) { a.cancel(); a.play(); });
   }
 
   // Go to a step anywhere on the path, opening its page if it's elsewhere.

@@ -869,3 +869,11 @@ html.present-leaving body { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   html.present body { transition: none; }
 }
+
+/* Big numbers always fit their card: the type follows the card's own width
+   (container query units), with the earlier sizes as the upper limit. */
+.stat { container-type: inline-size; }
+.stat-num { font-size: min(clamp(3rem, 6vw, 5rem), 27cqi); }
+html.present .stat-num { font-size: min(3.2rem, 27cqi); }
+html.present .stats-2 .stat-num { font-size: min(3.4rem, 27cqi); }
+html.present .why-stats .stat-num { font-size: min(2.6rem, 27cqi); }

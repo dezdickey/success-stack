@@ -736,3 +736,77 @@ html.present .hero-art { font-size: 0.8rem; }
 @media (prefers-reduced-motion: reduce) {
   .js .hero-art, .js .hero-art * { animation: none !important; }
 }
+
+/* ==========================================================================
+   Wow pass, piece 3: the numbers come alive.
+   Each crowd is 100 figures. The final positions are the default, so the page
+   reads the same without JavaScript; the script starts them all above the
+   line and lets them sink (and, for the internship, rise) when seen.
+   ========================================================================== */
+
+.why-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(1.2rem, 3vw, 2.5rem); align-items: center; margin-top: 1.2rem; }
+.why-stats { grid-template-columns: 1fr; margin: 0; }
+@media (max-width: 900px) { .why-grid { grid-template-columns: 1fr; } }
+
+.crowd { --cell: 1.15rem; --drop: calc(var(--cell) * 5 + 1.4rem); position: relative; margin: 0; width: max-content; max-width: 100%; }
+.crowd-figs {
+  display: grid; grid-template-columns: repeat(20, var(--cell)); grid-auto-rows: var(--cell);
+  padding-bottom: var(--drop); position: relative;
+}
+.crowd-line {
+  position: absolute; left: -0.4rem; right: -0.4rem; top: calc(var(--cell) * 5 + 0.62rem);
+  border-top: 3px dashed var(--ink);
+}
+.crowd-cap { font-size: 0.85rem; color: var(--muted); margin-top: 0.6rem; max-width: calc(var(--cell) * 20); }
+.fig { position: relative; width: var(--cell); height: var(--cell); }
+.fig::before, .fig::after { content: ""; position: absolute; left: 50%; background: var(--ink); }
+.fig::before { top: 6%; width: 36%; height: 36%; margin-left: -18%; border-radius: 50%; }
+.fig::after { top: 46%; width: 60%; height: 46%; margin-left: -30%; border-radius: 45% 45% 14% 14%; }
+.fig.sink { transform: translateY(var(--drop)); opacity: 0.38; }
+.crowd-lift .fig.lift { transform: translateY(0); opacity: 1; }
+.crowd-lift .fig.lift::before, .crowd-lift .fig.lift::after { background: var(--intern-dark); }
+.crowd-block {
+  position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--cell) * 1.05);
+  display: flex; align-items: center; justify-content: center; border-radius: 0.35rem;
+  background: var(--intern); color: var(--ink); font-weight: 800; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.crowd-lift .crowd-figs { padding-bottom: calc(var(--drop) + var(--cell) * 1.3); }
+
+/* With JavaScript: start everyone above the line, then play */
+.js .crowd .fig { transition: transform 0.8s cubic-bezier(0.55, 0, 0.3, 1) var(--d, 0s), opacity 0.8s ease var(--d, 0s); }
+.js .crowd:not(.play) .fig.sink { transform: translateY(0); opacity: 1; }
+.js .crowd-lift.play:not(.lifted) .fig.lift { transform: translateY(var(--drop)); opacity: 0.38; }
+.js .crowd-lift.lifted .fig.lift { transition-delay: var(--d2, 0s); }
+.js .crowd-lift .crowd-block { transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; }
+.js .crowd-lift:not(.lifted) .crowd-block { transform: translateY(1.2rem); opacity: 0; }
+.js .crowd.no-anim .fig, .js .crowd.no-anim .crowd-block { transition: none !important; }
+
+.lift-stats { display: grid; gap: 0.9rem; }
+.lift-row { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.9rem; align-items: center; margin: 0; font-size: 1.1rem; line-height: 1.4; }
+.lift-num {
+  font-family: var(--font-display); font-size: clamp(3rem, 6vw, 4.6rem); font-weight: 900; line-height: 1;
+  letter-spacing: -0.03em; font-variant-numeric: tabular-nums; min-width: 2.2ch; text-align: right;
+}
+.lift-with .lift-num { color: var(--intern-dark); }
+
+@media (max-width: 480px) { .crowd { --cell: 0.95rem; } }
+@media (prefers-reduced-motion: reduce) {
+  .js .crowd .fig, .js .crowd-lift .crowd-block { transition: none !important; }
+}
+
+html.present .why-grid { grid-template-columns: auto minmax(0, 1fr); gap: 2.5rem; margin-top: 0.6rem; }
+html.present .crowd { --cell: 0.95rem; }
+html.present .crowd-cap { font-size: 0.6rem; }
+html.present .why-stats .stat { padding: 0.7rem 0.9rem; }
+html.present .why-stats .stat-num { font-size: 2.6rem; }
+html.present .why-stats .stat-text { font-size: 0.85rem; }
+html.present .lift-row { font-size: 1rem; }
+html.present .lift-num { font-size: 3.6rem; }
+html.present .question { font-size: 2.4rem; }
+html.present #why .lead { margin-bottom: 0; }
+html.present #why .why-grid { grid-template-columns: auto minmax(0, 1fr); }
+html.present #why .why-stats { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+html.present .crowd { --cell: 0.9rem; }
+html.present .crowd-line { top: calc(var(--cell) * 5 + 0.62rem); }
+.why-stats .stat:nth-child(1) { border-top-color: var(--intern); }
+.why-stats .stat:nth-child(2) { border-top-color: var(--certs); }

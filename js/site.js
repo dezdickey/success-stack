@@ -128,7 +128,7 @@
      decides how the site is organized; it only picks sections to show. */
 
   var TALK = [
-    ['index', 'top'], ['index', 'why'], ['index', 'odds'],
+    ['index', 'top'], ['index', 'why'], ['index', 'lift'], ['index', 'odds'],
     ['index', 'stack'], ['index', 'blocks'], ['index', 'windows'],
     ['index', 'built-by'],
     ['roadmap', 'years'], ['roadmap', 'calendar'], ['roadmap', 'where'],
@@ -200,8 +200,10 @@
   // Coming back to a section with an animation (like the hero) plays it again.
   function replayIn(el) {
     var art = el.querySelector('.hero-art');
-    if (!art || !art.getAnimations) return;
-    art.getAnimations({ subtree: true }).forEach(function (a) { a.cancel(); a.play(); });
+    if (art && art.getAnimations) {
+      art.getAnimations({ subtree: true }).forEach(function (a) { a.cancel(); a.play(); });
+    }
+    if (window.SSMotion) window.SSMotion.replay(el);
   }
 
   // Go to a step anywhere on the path, opening its page if it's elsewhere.
@@ -367,4 +369,90 @@
     enter(first);
     setTimeout(function () { show(first); }, 0);
   }
+})();
+
+/*
+ * Motion: the crowds of 100 and the counters. Each plays when it scrolls into
+ * view (and again when presenting returns to it). With reduced motion, or
+ * without IntersectionObserver, everything simply shows its final state.
+ */
+(function () {
+  'use strict';
+
+  var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var crowds = Array.prototype.slice.call(document.querySelectorAll('.crowd'));
+  var counters = Array.prototype.slice.call(document.querySelectorAll('.count'));
+  if (!crowds.length && !counters.length) return;
+
+  // Delays come from the script, so the CSP needs no inline styles.
+  crowds.forEach(function (crowd) {
+    var sinkers = crowd.querySelectorAll('.fig.sink');
+    for (var i = 0; i < sinkers.length; i++) sinkers[i].style.setProperty('--d', (i * 14) + 'ms');
+    var lifters = crowd.querySelectorAll('.fig.lift');
+    for (var j = 0; j < lifters.length; j++) lifters[j].style.setProperty('--d2', (j * 45) + 'ms');
+  });
+  counters.forEach(function (el) { el.setAttribute('data-final', el.textContent); });
+
+  function finish(crowd) {
+    crowd.classList.add('play', 'lifted');
+  }
+
+  function playCrowd(crowd) {
+    clearTimeout(crowd.liftTimer);
+    if (reduce) { finish(crowd); return; }
+    crowd.classList.add('no-anim');
+    crowd.classList.remove('play', 'lifted');
+    void crowd.offsetWidth;
+    crowd.classList.remove('no-anim');
+    void crowd.offsetWidth;
+    crowd.classList.add('play');
+    if (crowd.classList.contains('crowd-lift')) {
+      crowd.liftTimer = setTimeout(function () { crowd.classList.add('lifted'); }, 1700);
+    } else {
+      crowd.classList.add('lifted');
+    }
+  }
+
+  function countUp(el) {
+    var text = el.getAttribute('data-final');
+    var m = /^(\D*)(\d+(?:\.\d+)?)([\s\S]*)$/.exec(text);
+    clearTimeout(el.finalTimer);
+    if (!m || reduce) { el.textContent = text; return; }
+    var target = parseFloat(m[2]);
+    var decimals = (m[2].split('.')[1] || '').length;
+    var duration = 1100, start = null;
+    function frame(now) {
+      if (start === null) start = now;
+      var t = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = t < 1 ? m[1] + (target * eased).toFixed(decimals) + m[3] : text;
+      if (t < 1) window.requestAnimationFrame(frame);
+    }
+    el.textContent = m[1] + (0).toFixed(decimals) + m[3];
+    window.requestAnimationFrame(frame);
+    // Never left part-way: the real number is always set at the end.
+    el.finalTimer = setTimeout(function () { el.textContent = text; }, duration + 400);
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    crowds.forEach(finish);
+    return;
+  }
+
+  var seen = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      seen.unobserve(entry.target);
+      if (entry.target.classList.contains('crowd')) playCrowd(entry.target); else countUp(entry.target);
+    });
+  }, { threshold: 0.35 });
+  crowds.forEach(function (c) { seen.observe(c); });
+  counters.forEach(function (c) { seen.observe(c); });
+
+  window.SSMotion = {
+    replay: function (section) {
+      Array.prototype.forEach.call(section.querySelectorAll('.crowd'), playCrowd);
+      Array.prototype.forEach.call(section.querySelectorAll('.count'), countUp);
+    }
+  };
 })();
